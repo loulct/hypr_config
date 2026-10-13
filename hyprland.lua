@@ -51,13 +51,6 @@ local anytop      = "btop"
 ---- AUTOSTART ----
 -------------------
 
-
-hl.window_rule({
-  name = "nnn-on-main-monitor-on-startup",
-  monitor = "eDP-1",
-  match = { class = "^wnnn$" },
-})
-
 hl.window_rule({
   name = "anytop-on-main-monitor-on-startup",
   monitor = "eDP-1",
@@ -93,11 +86,12 @@ hl.on("hyprland.start", function()
   hl.exec_cmd(string.format("%s --class startup_kitty", terminal))
   hl.exec_cmd(string.format("%s --class wrmpc -e %s", terminal, musicPlayer))
   hl.exec_cmd(string.format("%s --class wbtop -e %s", terminal, anytop))
-  hl.exec_cmd(string.format("%s --class wnnn -e %s", terminal, fileManager))
+  -- hl.exec_cmd(string.format("%s -e %s", terminal, fileManager))
   hl.exec_cmd("hyprpaper & firefox")
   --   hl.exec_cmd("waybar & hyprpaper & firefox")
 end)
 
+-- doesn't work btw
 -- hl.dispatch(hl.dsp.focus({ window = "class:wbtop" }))
 -- hl.dispatch(hl.dsp.layout("splitratio 0.5"))
 
