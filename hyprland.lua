@@ -45,16 +45,16 @@ local terminal    = "kitty"
 local fileManager = "nnn"
 local menu        = "hyprlauncher"
 local musicPlayer = "rmpc"
-local anytop      = "btop"
+local btop        = "btop"
 
 -------------------
 ---- AUTOSTART ----
 -------------------
 
 hl.window_rule({
-  name = "anytop-on-main-monitor-on-startup",
+  name = "btop-on-main-monitor-on-startup",
   monitor = "eDP-1",
-  match = { class = "^wbtop$" },
+  match = { class = "^btop$" },
 })
 
 hl.window_rule({
@@ -66,16 +66,27 @@ hl.window_rule({
 hl.window_rule({
   name = "rmpc-on-second-monitor-on-startup",
   monitor = "HDMI-A-1",
-  match = { class = "^wrmpc$" },
+  match = { class = "^rmpc$" },
   -- float = true
+  workspace = "special"
 })
 
 hl.window_rule({
   name = "kitty-on-second-monitor-on-startup",
   monitor = "HDMI-A-1",
-  match = { class = "^startup_kitty$" },
+  match = { class = "^kitty1$" },
   -- float = true
+  workspace = "special"
 })
+
+hl.window_rule({
+  name = "nnn-on-second-monitor-on-startup",
+  monitor = "HDMI-A-1",
+  match = { class = "^nnn$" },
+  -- float = true
+  workspace = "special"
+})
+
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
@@ -83,17 +94,13 @@ hl.window_rule({
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
-  hl.exec_cmd(string.format("%s --class startup_kitty", terminal))
-  hl.exec_cmd(string.format("%s --class wrmpc -e %s", terminal, musicPlayer))
-  hl.exec_cmd(string.format("%s --class wbtop -e %s", terminal, anytop))
-  -- hl.exec_cmd(string.format("%s -e %s", terminal, fileManager))
+  hl.exec_cmd(string.format("%s --class kitty1", terminal))
+  hl.exec_cmd(string.format("%s --class rmpc -e %s", terminal, musicPlayer))
+  hl.exec_cmd(string.format("%s --class btop -e %s --tty", terminal, btop))
+  hl.exec_cmd(string.format("%s --class nnn -e %s", terminal, fileManager))
   hl.exec_cmd("hyprpaper & firefox")
   --   hl.exec_cmd("waybar & hyprpaper & firefox")
 end)
-
--- doesn't work btw
--- hl.dispatch(hl.dsp.focus({ window = "class:wbtop" }))
--- hl.dispatch(hl.dsp.layout("splitratio 0.5"))
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
