@@ -58,35 +58,31 @@ hl.window_rule({
 })
 
 hl.window_rule({
-  name = "firefox-on-second-monitor-on-startup",
-  monitor = "HDMI-A-1",
-  match = { class = "^firefox$" }
-})
-
-hl.window_rule({
   name = "rmpc-on-second-monitor-on-startup",
   monitor = "HDMI-A-1",
-  match = { class = "^rmpc$" },
-  -- float = true
-  workspace = "special"
+  match = { initial_class = "^rmpc$" },
+  workspace = "special:magic silent"
 })
 
 hl.window_rule({
   name = "kitty-on-second-monitor-on-startup",
   monitor = "HDMI-A-1",
-  match = { class = "^kitty1$" },
-  -- float = true
-  workspace = "special"
+  match = { initial_class = "^kitty1$" },
+  workspace = "special:magic silent"
 })
 
 hl.window_rule({
   name = "nnn-on-second-monitor-on-startup",
   monitor = "HDMI-A-1",
-  match = { class = "^nnn$" },
-  -- float = true
-  workspace = "special"
+  match = { initial_class = "^nnn$" },
+  workspace = "special:magic silent"
 })
 
+hl.window_rule({
+  name = "firefox-on-second-monitor-on-startup",
+  monitor = "HDMI-A-1",
+  match = { class = "^firefox$" }
+})
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
