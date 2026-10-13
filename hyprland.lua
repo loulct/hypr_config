@@ -45,11 +45,44 @@ local terminal    = "kitty"
 local fileManager = "nnn"
 local menu        = "hyprlauncher"
 local musicPlayer = "rmpc"
-local htop        = "htop"
+local anytop      = "btop"
 
 -------------------
 ---- AUTOSTART ----
 -------------------
+
+
+hl.window_rule({
+  name = "nnn-on-main-monitor-on-startup",
+  monitor = "eDP-1",
+  match = { class = "^wnnn$" },
+})
+
+hl.window_rule({
+  name = "anytop-on-main-monitor-on-startup",
+  monitor = "eDP-1",
+  match = { class = "^wbtop$" },
+})
+
+hl.window_rule({
+  name = "firefox-on-second-monitor-on-startup",
+  monitor = "HDMI-A-1",
+  match = { class = "^firefox$" }
+})
+
+hl.window_rule({
+  name = "rmpc-on-second-monitor-on-startup",
+  monitor = "HDMI-A-1",
+  match = { class = "^wrmpc$" },
+  -- float = true
+})
+
+hl.window_rule({
+  name = "kitty-on-second-monitor-on-startup",
+  monitor = "HDMI-A-1",
+  match = { class = "^startup_kitty$" },
+  -- float = true
+})
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
@@ -57,14 +90,16 @@ local htop        = "htop"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
-  hl.exec_cmd(terminal)
-  hl.exec_cmd(string.format("%s -e %s", terminal, fileManager))
-  hl.exec_cmd(string.format("%s -e %s", terminal, musicPlayer))
-  hl.exec_cmd(string.format("%s -e %s", terminal, htop))
+  hl.exec_cmd(string.format("%s --class startup_kitty", terminal))
+  hl.exec_cmd(string.format("%s --class wrmpc -e %s", terminal, musicPlayer))
+  hl.exec_cmd(string.format("%s --class wbtop -e %s", terminal, anytop))
+  hl.exec_cmd(string.format("%s --class wnnn -e %s", terminal, fileManager))
   hl.exec_cmd("hyprpaper & firefox")
   --   hl.exec_cmd("waybar & hyprpaper & firefox")
 end)
 
+-- hl.dispatch(hl.dsp.focus({ window = "class:wbtop" }))
+-- hl.dispatch(hl.dsp.layout("splitratio 0.5"))
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -198,7 +233,7 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 -- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
 hl.config({
   dwindle = {
-    preserve_split = true,     -- You probably want this
+    preserve_split = true, -- You probably want this
   },
 })
 
@@ -222,8 +257,8 @@ hl.config({
 
 hl.config({
   misc = {
-    force_default_wallpaper = -1,       -- Set to 0 or 1 to disable the anime mascot wallpapers
-    disable_hyprland_logo   = true,     -- If true disables the random hyprland logo / anime girl background. :(
+    force_default_wallpaper = -1,   -- Set to 0 or 1 to disable the anime mascot wallpapers
+    disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
   },
 })
 
@@ -242,7 +277,7 @@ hl.config({
 
     follow_mouse = 1,
 
-    sensitivity  = 0,    -- -1.0 - 1.0, 0 means no modification.
+    sensitivity  = 0, -- -1.0 - 1.0, 0 means no modification.
 
     touchpad     = {
       natural_scroll = false,
@@ -291,7 +326,7 @@ hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
-  local key = i % 10   -- 10 maps to key 0
+  local key = i % 10 -- 10 maps to key 0
   hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
   hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
